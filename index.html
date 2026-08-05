@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adhikar — Know Your Rights</title>
+<style>
+:root{
+  --ink:#181712;
+  --ink-soft:#4a4740;
+  --paper:#EDE9DC;
+  --paper-raised:#F7F4EA;
+  --navy:#16233F;
+  --navy-soft:#2A3A5C;
+  --marigold:#D98E2B;
+  --marigold-deep:#B96F14;
+  --seal:#7A2E2E;
+  --verified:#2F6B4F;
+  --line:#D8D2BF;
+  --radius:2px;
+  --serif: "Zilla Slab", "Roboto Slab", Georgia, serif;
+  --sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", "Courier New", monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--navy);}
+button{font-family:inherit;cursor:pointer;}
+::selection{background:var(--marigold);color:var(--ink);}
+
+/* ---------- perforated / stamped visual motifs ---------- */
+.stamp{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:1.6em;height:1.6em;border-radius:50%;
+  border:1.5px solid currentColor;
+  font-family:var(--mono);font-size:.62em;font-weight:700;
+  flex:none;
+}
+.dotted{border-top:2px dotted var(--line);}
+
+/* ---------- shell ---------- */
+.shell{display:flex;min-height:100vh;}
+.sidebar{
+  width:230px;flex:none;background:var(--navy);color:#EDE9DC;
+  display:flex;flex-direction:column;position:sticky;top:0;height:100vh;
+}
+.brand{
+  padding:22px 20px 16px;border-bottom:1px solid rgba(237,233,220,.15);
+}
+.brand .mark{
+  font-family:var(--serif);font-weight:700;font-size:22px;letter-spacing:.02em;
+  display:flex;align-items:center;gap:8px;color:#fff;
+}
+.brand .mark .seal-dot{
+  width:9px;height:9px;border-radius:50%;background:var(--marigold);
+  box-shadow:0 0 0 3px rgba(217,142,43,.25);
+}
+.brand .tag{font-size:11.5px;color:#B9C0D1;margin-top:4px;letter-spacing:.03em;text-transform:uppercase;}
+
+.nav{flex:1;padding:14px 10px;display:flex;flex-direction:column;gap:2px;}
+.nav button{
+  background:none;border:none;color:#D9DEE9;text-align:left;
+  padding:11px 12px;border-radius:var(--radius);font-size:14px;
+  display:flex;align-items:center;gap:10px;transition:background .15s;
+  font-family:var(--sans);
+}
+.nav button .num{font-family:var(--mono);font-size:11px;color:#7C8AAE;width:22px;flex:none;}
+.nav button:hover{background:rgba(255,255,255,.06);}
+.nav button.active{background:var(--marigold);color:var(--navy);font-weight:600;}
+.nav button.active .num{color:var(--navy);opacity:.6;}
+
+.sidebar-foot{
+  padding:16px 20px;border-top:1px solid rgba(237,233,220,.15);font-size:11.5px;color:#9AA3BC;
+}
+.sidebar-foot b{color:#EDE9DC;}
+
+.main{flex:1;min-width:0;display:flex;flex-direction:column;}
+.topbar{
+  background:var(--seal);color:#fff;font-size:12.5px;padding:8px 24px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.topbar b{font-weight:700;}
+.content{flex:1;padding:36px 40px 80px;max-width:920px;width:100%;}
+
+/* ---------- typography ---------- */
+h1{font-family:var(--serif);font-size:30px;margin:0 0 6px;letter-spacing:-.01em;}
+h2{font-family:var(--serif);font-size:20px;margin:34px 0 10px;}
+h3{font-family:var(--serif);font-size:16px;margin:20px 0 8px;}
+p{margin:0 0 12px;color:var(--ink-soft);}
+.lede{font-size:16px;color:var(--ink-soft);max-width:640px;}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--marigold-deep);font-weight:700;margin-bottom:6px;display:block;
+}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 22px;margin-bottom:16px;
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:760px){.grid{grid-template-columns:1fr;}}
+
+.topic-card{
+  background:var(--paper-raised);border:1px solid var(--line);
+  padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:border-color .15s,transform .1s;
+  position:relative;
+}
+.topic-card:hover{border-color:var(--marigold-deep);}
+.topic-card .ref{
+  font-family:var(--mono);font-size:11px;color:var(--seal);letter-spacing:.03em;
+}
+.topic-card h3{margin:4px 0 6px;}
+.topic-card p{margin:0;font-size:13.5px;}
+
+.section-ref{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:11.5px;background:var(--navy);color:#fff;
+  padding:3px 8px;border-radius:var(--radius);margin-bottom:8px;
+}
+.provision{
+  border-left:3px solid var(--marigold);padding:4px 0 4px 14px;margin:14px 0;
+}
+.provision .ptext{font-size:14px;color:var(--ink);}
+
+.verify-note{
+  display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--ink-soft);
+  background:rgba(47,107,79,.08);border:1px solid rgba(47,107,79,.25);
+  padding:10px 12px;border-radius:var(--radius);margin-top:10px;
+}
+.verify-note .stamp{color:var(--verified);width:1.4em;height:1.4em;font-size:.55em;}
+
+.steps{padding-left:0;list-style:none;margin:10px 0;}
+.steps li{
+  display:flex;gap:10px;margin-bottom:8px;font-size:13.5px;color:var(--ink-soft);
+}
+.steps li .n{
+  font-family:var(--mono);font-size:11px;color:#fff;background:var(--navy-soft);
+  width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;
+}
+
+/* ---------- disclaimer banner ---------- */
+.disclaimer{
+  background:repeating-linear-gradient(135deg,var(--seal),var(--seal) 8px,#8A3838 8px,#8A3838 16px);
+  color:#fff;padding:12px 22px;font-size:12.5px;display:flex;gap:10px;align-items:flex-start;
+  border-radius:var(--radius);margin:18px 0;
+}
+.disclaimer b{display:block;font-size:13px;margin-bottom:2px;}
+
+/* ---------- ask / chat ---------- */
+.chat-box{
+  background:var(--paper-raised);border:1px solid var(--line);min-height:340px;
+  display:flex;flex-direction:column;
+}
+.chat-log{flex:1;padding:20px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;max-height:460px;}
+.msg{max-width:80%;padding:11px 14px;border-radius:var(--radius);font-size:14px;}
+.msg.user{align-self:flex-end;background:var(--navy);color:#fff;}
+.msg.bot{align-self:flex-start;background:#fff;border:1px solid var(--line);}
+.msg.bot .src{font-family:var(--mono);font-size:10.5px;color:var(--marigold-deep);margin-bottom:6px;display:block;}
+.chat-suggest{display:flex;flex-wrap:wrap;gap:8px;padding:0 20px 14px;}
+.chip{
+  background:#fff;border:1px solid var(--line);padding:6px 12px;border-radius:20px;font-size:12.5px;color:var(--ink-soft);
+}
+.chip:hover{border-color:var(--marigold-deep);color:var(--ink);}
+.chat-input{display:flex;border-top:1px solid var(--line);}
+.chat-input input{
+  flex:1;border:none;padding:14px 16px;font-size:14px;font-family:inherit;background:transparent;outline:none;
+}
+.chat-input button{
+  background:var(--marigold);border:none;color:var(--navy);font-weight:700;padding:0 22px;font-size:14px;
+}
+.chat-input button:hover{background:var(--marigold-deep);color:#fff;}
+
+/* ---------- forms / doc generator ---------- */
+label{display:block;font-size:12.5px;font-weight:600;margin:14px 0 5px;color:var(--ink);}
+input[type=text],input[type=date],textarea,select{
+  width:100%;border:1px solid var(--line);background:#fff;padding:10px 12px;font-size:14px;
+  font-family:inherit;border-radius:var(--radius);
+}
+textarea{resize:vertical;min-height:70px;}
+.doc-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+.doc-tab{
+  padding:8px 14px;border:1px solid var(--line);background:var(--paper-raised);font-size:13px;border-radius:20px;
+}
+.doc-tab.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+.preview{
+  background:#fff;border:1px solid var(--line);padding:22px;font-family:var(--mono);font-size:12.5px;
+  white-space:pre-wrap;margin-top:16px;line-height:1.7;color:#222;max-height:420px;overflow-y:auto;
+}
+.btn{
+  background:var(--marigold);border:none;color:var(--navy);font-weight:700;padding:11px 20px;
+  border-radius:var(--radius);font-size:13.5px;margin-top:14px;display:inline-flex;align-items:center;gap:8px;
+}
+.btn:hover{background:var(--marigold-deep);color:#fff;}
+.btn.secondary{background:transparent;border:1px solid var(--navy);color:var(--navy);}
+
+/* ---------- help directory ---------- */
+.help-card{
+  background:var(--paper-raised);border:1px solid var(--line);padding:18px 20px;display:flex;
+  justify-content:space-between;align-items:center;gap:14px;margin-bottom:10px;
+}
+.help-card .num{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--seal);white-space:nowrap;}
+.help-card h3{margin:0 0 3px;font-size:15px;}
+.help-card p{margin:0;font-size:12.5px;}
+
+/* ---------- home hero ---------- */
+.hero{
+  background:var(--navy);color:#EDE9DC;padding:38px 34px;border-radius:var(--radius);margin-bottom:8px;
+  position:relative;overflow:hidden;
+}
+.hero .eyebrow{color:var(--marigold);}
+.hero h1{color:#fff;max-width:520px;}
+.hero p{color:#C6CCDD;max-width:480px;}
+.hero .updates{
+  margin-top:20px;border-top:1px solid rgba(255,255,255,.15);padding-top:16px;font-size:12.5px;
+}
+.hero .updates b{color:var(--marigold);}
+
+.cat-strip{display:flex;gap:10px;overflow-x:auto;padding:4px 0 14px;}
+.cat-pill{
+  flex:none;padding:7px 14px;border:1px solid var(--line);border-radius:20px;font-size:12.5px;background:var(--paper-raised);
+}
+.cat-pill.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+/* mobile nav */
+.mobile-topbar{display:none;}
+@media(max-width:880px){
+  .sidebar{display:none;}
+  .mobile-topbar{
+    display:flex;background:var(--navy);color:#fff;padding:14px 18px;align-items:center;justify-content:space-between;
+    position:sticky;top:0;z-index:5;
+  }
+  .mobile-topbar .mark{font-family:var(--serif);font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;}
+  .mobile-nav{display:flex;gap:0;overflow-x:auto;background:var(--navy-soft);}
+  .mobile-nav button{
+    flex:none;background:none;border:none;color:#D9DEE9;padding:11px 14px;font-size:12.5px;white-space:nowrap;
+  }
+  .mobile-nav button.active{color:var(--marigold);border-bottom:2px solid var(--marigold);}
+  .content{padding:24px 18px 60px;}
+  .hero{padding:26px 20px;}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- desktop sidebar -->
+  <nav class="sidebar">
+    <div class="brand">
+      <div class="mark"><span class="seal-dot"></span>Adhikar</div>
+      <div class="tag">Legal aid &amp; rights, India</div>
+    </div>
+    <div class="nav" id="navList"></div>
+    <div class="sidebar-foot">
+      <b>15100</b> — NALSA free legal aid helpline, toll-free, all of India.
+    </div>
+  </nav>
+
+  <div class="main">
+    <div class="mobile-topbar">
+      <div class="mark"><span class="seal-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--marigold);"></span>Adhikar</div>
+      <span style="font-size:11px;color:#B9C0D1;">15100 · Free Legal Aid</span>
+    </div>
+    <div class="mobile-nav" id="mobileNav"></div>
+
+    <div class="topbar">
+      <span>⚠</span>
+      <span><b>General legal information, not legal advice.</b> For your specific situation, contact NALSA on 15100 or a registered lawyer.</span>
+    </div>
+
+    <div class="content" id="content"></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   ADHIKAR — data layer
+   All content below is a curated, general-information summary
+   of major central Indian statutes. It is NOT exhaustive and
+   NOT a substitute for the Bare Act or professional advice.
+   Section numbers should be cross-checked against
+   indiacode.nic.in before being relied on for any filing.
+========================================================= */
+
+const SECTIONS = [
+  {id:"home", label:"Home"},
+  {id:"rights", label:"Know Your Rights"},
+  {id:"ask", label:"Ask Adhikar"},
+  {id:"draft", label:"Draft a Document"},
+  {id:"help", label:"Get Help"},
+];
+
+const TOPICS = [
+  {
+    id:"arrest",
+    cat:"Criminal",
+    title:"Your rights if you are arrested",
+    act:"Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023 — replaced the CrPC, 1973, from 1 July 2024",
+    summary:"Every person taken into police custody in India has specific, enforceable rights during arrest — these exist regardless of the offence alleged.",
+    provisions:[
+      {ref:"BNSS S.47 (formerly CrPC S.50)", text:"You must be told the grounds of your arrest, and — if the offence is bailable — that you are entitled to be released on bail."},
+      {ref:"BNSS S.48 (formerly CrPC S.50A)", text:"The police must inform a friend, relative, or a person you name about your arrest and the place you are held."},
+      {ref:"BNSS S.58 (formerly CrPC S.57)", text:"You cannot be held for more than 24 hours without being produced before a Magistrate (excluding travel time to court)."},
+      {ref:"BNSS S.55 (formerly CrPC S.46(4))", text:"As a general rule, women cannot be arrested after sunset and before sunrise except in exceptional circumstances, and only with prior written permission of a Magistrate."},
+      {ref:"BNSS S.52–53 (formerly CrPC S.54)", text:"You have the right to a medical examination at the time of arrest, and to have injuries recorded."},
+      {ref:"Constitution Art. 22(1)", text:"You have the right to consult, and be defended by, a lawyer of your choice from the moment of arrest."},
+    ],
+    steps:[
+      "Ask the arresting officer to show you the grounds of arrest in writing where possible.",
+      "Give the police a name and number of someone who should be informed — this is your legal right, not a favour.",
+      "Ask for a medical check-up and make sure any injuries are noted on record.",
+      "Do not sign any blank paper or statement you have not read and understood.",
+      "If produced before a Magistrate past 24 hours without valid reason, this can be raised as an illegal detention.",
+    ]
+  },
+  {
+    id:"fir",
+    cat:"Criminal",
+    title:"Filing an FIR — and what to do if police refuse",
+    act:"BNSS, 2023, Section 173 (formerly CrPC S.154)",
+    summary:"Police are legally required to register an FIR for any information disclosing a cognizable offence — they cannot simply turn you away.",
+    provisions:[
+      {ref:"BNSS S.173(1)", text:"For a cognizable offence, the officer in charge must reduce the information to writing and register an FIR — a preliminary inquiry before registration is allowed only in narrow categories (e.g. matrimonial/family disputes, commercial disputes, corruption cases, or cases with over 3 years' delay)."},
+      {ref:"Zero FIR", text:"An FIR for a cognizable offence can be lodged at any police station regardless of where the offence occurred; it is later transferred to the police station with jurisdiction."},
+      {ref:"BNSS S.173(4) (formerly CrPC S.154(3))", text:"If an officer in charge refuses to register your FIR, you can send the complaint in writing, by post, to the Superintendent of Police, who must either investigate personally or direct an investigation."},
+      {ref:"BNSS S.175(3) (formerly CrPC S.156(3))", text:"You can also approach a Magistrate directly with an application to order the police to register an FIR and investigate."},
+    ],
+    steps:[
+      "Give your complaint in writing and keep a copy; ask for a free copy of the FIR once registered — this is your legal right.",
+      "If refused, write to the SP of the district by post/email describing the incident and the refusal.",
+      "If still refused, you (or a lawyer) can move an application before the Magistrate under BNSS S.175(3).",
+      "For sexual offences, acid attack, and a few other categories, the FIR must be recorded by a woman officer where the informant is a woman.",
+    ]
+  },
+  {
+    id:"bail",
+    cat:"Criminal",
+    title:"Bail and anticipatory bail",
+    act:"BNSS, 2023, Chapter XXXV (formerly CrPC Chapter XXXIII)",
+    summary:"Bail is the rule and jail is the exception in Indian criminal law for most offences — the type of bail available depends on whether the offence is bailable or non-bailable.",
+    provisions:[
+      {ref:"BNSS S.478–480 (formerly CrPC S.436–437)", text:"In a bailable offence, bail is a matter of right. In a non-bailable offence, the court has discretion, weighing the severity of the offence, flight risk, and possibility of tampering with evidence."},
+      {ref:"BNSS S.482 (formerly CrPC S.438)", text:"Anticipatory bail can be sought from the Sessions Court or High Court before arrest, where a person apprehends arrest on an accusation of a non-bailable offence."},
+      {ref:"BNSS S.187", text:"An accused not covered by earlier grounds is generally entitled to bail if the investigation is not completed within the prescribed period (typically 60 or 90 days depending on the offence)."},
+    ],
+    steps:[
+      "Identify whether the offence alleged is bailable or non-bailable — this decides which court you approach first.",
+      "For anticipatory bail, this must be filed before arrest, ideally as soon as you learn of a likely FIR against you.",
+      "Bail applications need supporting facts: roots in the community, no flight risk, cooperation with investigation.",
+      "A lawyer's drafting is strongly recommended for bail applications — outcomes depend heavily on how facts are presented.",
+    ]
+  },
+  {
+    id:"dv",
+    cat:"Family",
+    title:"Protection from domestic violence",
+    act:"Protection of Women from Domestic Violence Act, 2005",
+    summary:"A civil law giving women facing violence in a domestic/shared household fast access to protection, residence, and monetary relief — separate from, and in addition to, any criminal case.",
+    provisions:[
+      {ref:"S.3", text:"'Domestic violence' includes physical, sexual, verbal, emotional, and economic abuse — not physical violence alone."},
+      {ref:"S.12", text:"An aggrieved woman can file an application before a Magistrate through a Protection Officer or directly, seeking protection, residence, monetary relief, custody, and compensation orders."},
+      {ref:"S.17", text:"A woman has the right to reside in the 'shared household' regardless of whether she has any title or ownership rights in it."},
+      {ref:"S.18–20", text:"The Magistrate can pass protection orders (stopping further violence/contact), residence orders, and monetary relief orders — often on an interim basis quickly after filing."},
+    ],
+    steps:[
+      "Contact the nearest Protection Officer (appointed in every district) or a registered service provider/NGO — they can help draft and file the application at no cost.",
+      "You can also approach the police, a Magistrate directly, or call the Women Helpline 181 or NALSA 15100.",
+      "Keep any evidence: messages, medical records, witness details, photos — these strengthen the application.",
+      "This is a civil remedy; a separate criminal complaint (e.g. under BNS S.85 — cruelty by husband/relatives, formerly IPC S.498A) can be filed in parallel if applicable.",
+    ]
+  },
+  {
+    id:"maintenance",
+    cat:"Family",
+    title:"Maintenance for spouse, children, and parents",
+    act:"BNSS, 2023, Section 144 (formerly CrPC S.125), and personal laws",
+    summary:"A person who neglects to maintain a spouse, children, or aged parents unable to maintain themselves can be ordered by a Magistrate to pay a monthly allowance — this route is fast, secular, and applies regardless of religion.",
+    provisions:[
+      {ref:"BNSS S.144", text:"A wife (including one who has obtained divorce and not remarried), minor children, and parents unable to maintain themselves can claim maintenance from a person with sufficient means who neglects/refuses to maintain them."},
+      {ref:"Hindu Adoption & Maintenance Act, 1956 / Hindu Marriage Act, 1955 S.24–25", text:"Separate maintenance rights exist under personal law for Hindus — interim maintenance during proceedings, and permanent alimony after divorce."},
+      {ref:"Muslim Women (Protection of Rights on Divorce) Act, 1986", text:"Provides for reasonable and fair provision and maintenance to be paid within the iddat period, and beyond it in defined circumstances."},
+    ],
+    steps:[
+      "An application under BNSS S.144 is filed before a Magistrate in the area where the claimant resides — it does not require a lawyer to initiate, though one is strongly advisable.",
+      "Interim maintenance can often be granted quickly, pending the full hearing.",
+      "Gather proof of the other party's income/assets where possible — this affects the amount awarded.",
+      "This remedy exists independent of, and can be pursued alongside, a claim under personal law.",
+    ]
+  },
+  {
+    id:"divorce",
+    cat:"Family",
+    title:"Marriage and divorce — the basics",
+    act:"Hindu Marriage Act 1955 / Special Marriage Act 1954 / other personal laws",
+    summary:"Divorce law in India runs through the personal law that governed the marriage, or the Special Marriage Act for inter-faith/civil marriages — grounds and procedure differ accordingly.",
+    provisions:[
+      {ref:"Hindu Marriage Act S.13", text:"Grounds include cruelty, desertion (2+ years), adultery, conversion, mental disorder, and others; S.13B allows divorce by mutual consent after 1 year of separation."},
+      {ref:"Special Marriage Act S.27", text:"Sets out grounds of divorce for marriages registered under this Act, applicable regardless of the parties' religion."},
+      {ref:"Hindu Marriage Act S.24", text:"Either spouse can seek interim maintenance and litigation expenses while divorce proceedings are pending."},
+    ],
+    steps:[
+      "Identify which law governed your marriage (religion-specific personal law, or the Special Marriage Act) — this decides the grounds and forum.",
+      "Mutual consent divorce is usually faster: both parties file jointly and there is typically a cooling-off period (courts can waive this in appropriate cases).",
+      "Contested divorce requires proving specific grounds — this is where legal representation matters most.",
+      "Custody, maintenance, and division of property are usually decided alongside, or soon after, the divorce petition.",
+    ]
+  },
+  {
+    id:"consumer",
+    cat:"Consumer",
+    title:"Consumer complaints — defective goods & deficient services",
+    act:"Consumer Protection Act, 2019",
+    summary:"A consumer who has been sold defective goods, deficient services, or subjected to unfair trade practice can seek a fast, low-cost remedy through Consumer Commissions, without needing a lawyer.",
+    provisions:[
+      {ref:"S.2(7), (11)", text:"Defines 'consumer' broadly, and 'deficiency' in services to include any fault, imperfection, or inadequacy in quality that was required to be maintained."},
+      {ref:"S.34–36", text:"Sets pecuniary jurisdiction: District Commission (claims up to ₹50 lakh), State Commission (₹50 lakh–₹2 crore), National Commission (above ₹2 crore) — figures as per the 2019 Act; check current notified limits before filing."},
+      {ref:"S.17", text:"A complaint can be filed at the Commission local to where the complainant resides or works — not only where the seller is based."},
+      {ref:"e-Daakhil", text:"Complaints can be filed online through the e-Daakhil portal (edaakhil.nic.in), avoiding the need to travel to the Commission in person."},
+    ],
+    steps:[
+      "First send a written complaint/legal notice to the seller/service provider and keep proof of sending — many disputes resolve at this stage.",
+      "If unresolved, file a complaint with the National Consumer Helpline (1915 / 1800-11-4000) for free mediation assistance.",
+      "If still unresolved, file with the appropriate Consumer Commission — in person or via e-Daakhil — with bills, correspondence, and proof of deficiency attached.",
+      "No court fee is required for claims up to ₹5 lakh, and representation by a lawyer is optional.",
+    ]
+  },
+  {
+    id:"rti",
+    cat:"Governance",
+    title:"Right to Information",
+    act:"Right to Information Act, 2005",
+    summary:"Any citizen can seek information from a public authority, which is legally obliged to respond within a fixed timeframe — this is one of the strongest citizen-empowerment tools in Indian law.",
+    provisions:[
+      {ref:"S.6", text:"An application can be as simple as a plain-paper request stating the information sought, along with the prescribed fee (typically ₹10, waived for those below the poverty line)."},
+      {ref:"S.7(1)", text:"Information must be provided within 30 days of the request; within 48 hours if it concerns the life or liberty of a person."},
+      {ref:"S.19", text:"If there is no response, or the response is unsatisfactory, a first appeal lies to a senior officer, and a second appeal to the State/Central Information Commission."},
+      {ref:"S.20", text:"Public Information Officers who delay or wrongfully refuse information can be penalised up to ₹250/day, capped at ₹25,000."},
+    ],
+    steps:[
+      "Identify the correct Public Information Officer (PIO) for the department concerned — most departments list this on their website.",
+      "Keep the request specific and factual; vague or overly broad requests are more easily refused.",
+      "File online via the RTI Online Portal (rtionline.gov.in) for central government bodies, or by post for state departments (state portals vary).",
+      "If no reply within 30 days, file a first appeal immediately — do not wait.",
+    ]
+  },
+  {
+    id:"tenancy",
+    cat:"Property",
+    title:"Tenant and landlord rights",
+    act:"State Rent Control Acts / Model Tenancy Act, 2021 (adopted selectively by states)",
+    summary:"Tenancy is largely governed by state-specific rent control laws in India, so exact rights vary — but some protections are common across most states.",
+    provisions:[
+      {ref:"General principle", text:"A landlord generally cannot evict a tenant without following due legal process through a Rent Controller or civil court — 'self-help' eviction (cutting power/water, forcible removal) is not lawful even where rent is genuinely due."},
+      {ref:"Model Tenancy Act S.4", text:"Where adopted, requires a written rental agreement to be registered with a Rent Authority within a set period."},
+      {ref:"Model Tenancy Act S.10", text:"Caps the security deposit — typically at 2 months' rent for residential property, 6 months' for non-residential, where the Act applies."},
+    ],
+    steps:[
+      "Check whether your state has adopted the Model Tenancy Act, or relies on its own Rent Control Act — this changes the specific numbers that apply.",
+      "Always get a written rental agreement, ideally registered, stating rent, deposit, and notice period.",
+      "If facing illegal eviction or harassment, this can be reported to police and challenged before the Rent Authority/civil court.",
+      "Disputes over deposit refund can also be pursued as a civil recovery suit or, in some states, before the Rent Authority.",
+    ]
+  },
+  {
+    id:"workplace",
+    cat:"Employment",
+    title:"Workplace rights: wages, harassment, termination",
+    act:"Code on Wages 2019 / POSH Act 2013 / Industrial Disputes Act 1947",
+    summary:"Employees in India have statutory protections around minimum pay, workplace safety from harassment, and procedure before termination — separate laws cover different aspects.",
+    provisions:[
+      {ref:"Code on Wages, 2019, S.5–6", text:"Every employee is entitled to a wage not less than the minimum wage notified for that employment/state, with equal pay for equal work regardless of gender."},
+      {ref:"POSH Act 2013, S.4", text:"Every workplace with 10 or more employees must have an Internal Complaints Committee to receive and inquire into complaints of sexual harassment."},
+      {ref:"POSH Act 2013, S.9", text:"A complaint must generally be filed within 3 months of the incident (extendable), and the inquiry must conclude within 90 days."},
+      {ref:"Industrial Disputes Act 1947, S.25F", text:"For workmen covered by the Act, retrenchment requires notice/pay in lieu, and compensation — arbitrary dismissal without process can be challenged."},
+    ],
+    steps:[
+      "For unpaid/underpaid wages, a complaint can be filed with the local Labour Commissioner's office.",
+      "For workplace harassment, file a written complaint with the Internal Complaints Committee (ICC); if none exists, escalate to the Local Committee constituted by the district officer.",
+      "For unfair termination, check if you are covered as a 'workman' under the Industrial Disputes Act — this determines which forum and protections apply.",
+      "Keep offer letters, payslips, and written communication — these are essential evidence in labour disputes.",
+    ]
+  },
+  {
+    id:"cyber",
+    cat:"Cyber",
+    title:"Cybercrime and online fraud",
+    act:"Information Technology Act, 2000 / BNS provisions on cheating & fraud",
+    summary:"Financial fraud, identity theft, and online harassment are cognizable offences that can — and should — be reported quickly, since speed matters for freezing fraudulent transactions.",
+    provisions:[
+      {ref:"National Cyber Crime Reporting Portal", text:"Complaints can be filed online at cybercrime.gov.in, or by calling the Cyber Crime Helpline 1930 — filing quickly improves the chance of freezing funds transferred fraudulently."},
+      {ref:"IT Act S.66C, 66D", text:"Identity theft and cheating by personation using computer resources are punishable offences."},
+      {ref:"IT Act S.66E", text:"Capturing or publishing images that violate a person's privacy is a punishable offence."},
+      {ref:"BNS provisions (formerly IPC S.420 etc.)", text:"General cheating and fraud provisions under the Bharatiya Nyaya Sanhita apply in addition to IT Act provisions for online fraud."},
+    ],
+    steps:[
+      "For financial fraud, call 1930 immediately — the first few hours matter most for freezing the transaction.",
+      "File a detailed complaint at cybercrime.gov.in with transaction IDs, screenshots, and phone numbers involved.",
+      "Also inform your bank/payment app to flag and attempt to reverse the transaction.",
+      "For non-financial cybercrime (harassment, stalking, obscene content), the same portal has a dedicated 'report other cybercrime' category.",
+    ]
+  },
+  {
+    id:"senior",
+    cat:"Family",
+    title:"Senior citizens: maintenance and elder abuse",
+    act:"Maintenance and Welfare of Parents and Senior Citizens Act, 2007",
+    summary:"Parents and senior citizens unable to maintain themselves from their own income or property can claim maintenance from children or relatives who would inherit their property — enforced through a fast Tribunal process, not ordinary courts.",
+    provisions:[
+      {ref:"S.4–5", text:"A senior citizen (or parent, regardless of age, unable to maintain themselves) can apply to a Maintenance Tribunal for a monthly allowance from children or relatives."},
+      {ref:"S.5(4)", text:"The Tribunal is expected to dispose of an application within 90 days."},
+      {ref:"S.23", text:"Where property was transferred by a senior citizen on the condition of being cared for, and that condition is not honoured, the transfer can be declared void."},
+    ],
+    steps:[
+      "Applications can be made directly by the senior citizen, or by any person/organisation authorised by them, to the district Maintenance Tribunal — no lawyer is required.",
+      "The Tribunal process is designed to be summary and fast compared to civil courts.",
+      "Cases of abuse or abandonment can separately be reported to police, and elder helpline 14567.",
+    ]
+  },
+];
+
+const CATEGORIES = [...new Set(TOPICS.map(t=>t.cat))];
+
+const HELP = [
+  {name:"NALSA Free Legal Aid Helpline", num:"15100", note:"Toll-free · connects you to a panel lawyer for guidance and to apply for free legal aid, all of India."},
+  {name:"Women Helpline", num:"181", note:"24x7 toll-free helpline for women facing violence or distress."},
+  {name:"Cyber Crime Helpline", num:"1930", note:"Report financial fraud/cybercrime — call as soon as possible to improve chances of freezing funds."},
+  {name:"National Consumer Helpline", num:"1915", note:"Also reachable at 1800-11-4000 — for goods/service complaints, pre-litigation mediation."},
+  {name:"Child Helpline", num:"1098", note:"24x7 toll-free helpline for children in distress or needing protection."},
+  {name:"Senior Citizen Helpline", num:"14567", note:"Elder helpline (Elderline) for abuse, abandonment, and maintenance guidance."},
+  {name:"Police (emergency)", num:"112", note:"Unified national emergency number."},
+];
+
+/* =========================================================
+   Document templates
+========================================================= */
+const DOC_TYPES = [
+  {
+    id:"rti", label:"RTI Application",
+    fields:[
+      {k:"authority", label:"Public Information Officer / Department", ph:"e.g. Public Information Officer, Municipal Corporation of XYZ"},
+      {k:"name", label:"Your full name"},
+      {k:"address", label:"Your address"},
+      {k:"info", label:"Information sought", ta:true, ph:"Describe exactly what records/information you want, and the time period they cover."},
+      {k:"bpl", label:"Are you Below Poverty Line? (write Yes/No)"},
+    ],
+    render:(f)=>
+`To,
+${f.authority || "[Public Information Officer]"}
+
+Subject: Application under Right to Information Act, 2005
+
+Sir/Madam,
+
+I, ${f.name || "[Your Name]"}, residing at ${f.address || "[Your Address]"}, wish to seek the following information under Section 6(1) of the Right to Information Act, 2005:
+
+${f.info || "[Describe the information sought clearly, with specifics such as dates, file numbers, or subject matter, where known.]"}
+
+I am enclosing the prescribed fee of ₹10 (Indian Postal Order / Demand Draft / online payment as applicable).${(f.bpl||"").toLowerCase()==="yes" ? " I belong to the Below Poverty Line category and am exempt from the application fee under Section 7(5); a copy of my BPL certificate is enclosed." : ""}
+
+I request that the information be furnished within 30 days as mandated under Section 7(1) of the Act.
+
+Yours faithfully,
+${f.name || "[Your Name]"}
+Date: ${new Date().toLocaleDateString("en-IN")}
+Contact: [Your phone/email]`
+  },
+  {
+    id:"consumer", label:"Consumer Complaint (initial notice)",
+    fields:[
+      {k:"seller", label:"Seller / service provider name"},
+      {k:"selleraddr", label:"Seller's address"},
+      {k:"name", label:"Your name"},
+      {k:"address", label:"Your address"},
+      {k:"issue", label:"What went wrong", ta:true, ph:"Describe the product/service, purchase date, amount paid, and the defect/deficiency."},
+      {k:"relief", label:"What you want (refund/replacement/compensation)"},
+    ],
+    render:(f)=>
+`To,
+${f.seller || "[Seller/Service Provider]"}
+${f.selleraddr || "[Address]"}
+
+Subject: Notice regarding deficient service / defective goods
+
+Dear Sir/Madam,
+
+I, ${f.name || "[Your Name]"}, residing at ${f.address || "[Your Address]"}, am writing regarding the following:
+
+${f.issue || "[Describe the purchase and the problem in detail, with dates and amounts.]"}
+
+This amounts to a deficiency in service / defect in goods under the Consumer Protection Act, 2019. I request that you resolve this matter by providing: ${f.relief || "[state the remedy sought]"} within 15 days of receiving this notice.
+
+Please treat this as a formal notice. If the matter is not resolved satisfactorily, I will be constrained to approach the appropriate Consumer Disputes Redressal Commission and/or the National Consumer Helpline (1915) without further reference to you.
+
+I am attaching copies of the bill/receipt and other relevant correspondence.
+
+Yours faithfully,
+${f.name || "[Your Name]"}
+Date: ${new Date().toLocaleDateString("en-IN")}
+Contact: [Your phone/email]`
+  },
+  {
+    id:"notice", label:"General Legal Notice",
+    fields:[
+      {k:"to", label:"Recipient's name"},
+      {k:"toaddr", label:"Recipient's address"},
+      {k:"name", label:"Your name"},
+      {k:"address", label:"Your address"},
+      {k:"facts", label:"Facts of the matter", ta:true, ph:"State what happened, in chronological order, with dates."},
+      {k:"demand", label:"What you are demanding, and by when"},
+    ],
+    render:(f)=>
+`To,
+${f.to || "[Recipient's Name]"}
+${f.toaddr || "[Recipient's Address]"}
+
+Subject: Legal Notice
+
+Sir/Madam,
+
+Under instructions from ${f.name || "[Your Name]"}, residing at ${f.address || "[Your Address]"} (hereinafter "my client"), I/we set out the following facts:
+
+${f.facts || "[State the relevant facts clearly and in order.]"}
+
+In view of the above, my client hereby calls upon you to ${f.demand || "[state the demand and the deadline, e.g. 'pay the outstanding amount of ₹___ within 15 days of receipt of this notice']"}, failing which my client shall be constrained to initiate appropriate legal proceedings against you, entirely at your risk as to costs and consequences.
+
+A copy of this notice is retained for record and may be relied upon in any future proceedings.
+
+Yours faithfully,
+${f.name || "[Your Name]"}
+Date: ${new Date().toLocaleDateString("en-IN")}
+
+Note: A legal notice carries more weight when sent by, or reviewed by, a practising advocate before dispatch.`
+  },
+  {
+    id:"sp", label:"Complaint to SP (FIR refused)",
+    fields:[
+      {k:"sp", label:"Superintendent of Police, District"},
+      {k:"name", label:"Your name"},
+      {k:"address", label:"Your address"},
+      {k:"ps", label:"Police station where you were refused"},
+      {k:"incident", label:"What happened (the original incident)", ta:true},
+      {k:"date", label:"Date you approached the police station"},
+    ],
+    render:(f)=>
+`To,
+The Superintendent of Police,
+${f.sp || "[District]"}
+
+Subject: Refusal to register FIR — request for action under Section 173(4), Bharatiya Nagarik Suraksha Sanhita, 2023
+
+Sir/Madam,
+
+I, ${f.name || "[Your Name]"}, residing at ${f.address || "[Your Address]"}, wish to bring to your notice that on ${f.date || "[date]"}, I approached ${f.ps || "[Police Station]"} to report the following cognizable offence, but my complaint was not registered as an FIR:
+
+${f.incident || "[Describe the original incident that you tried to report, with date, time, and place.]"}
+
+Under Section 173(4) of the Bharatiya Nagarik Suraksha Sanhita, 2023 (corresponding to the erstwhile Section 154(3), CrPC), I request that you either investigate the matter yourself, or direct that an FIR be registered and investigation be conducted by an appropriate officer.
+
+I am available to provide any further details or documents required.
+
+Yours faithfully,
+${f.name || "[Your Name]"}
+Date: ${new Date().toLocaleDateString("en-IN")}
+Contact: [Your phone/email]`
+  },
+];
+
+/* =========================================================
+   Ask Adhikar — deterministic keyword-retrieval "assistant".
+   This intentionally does NOT generate free-form legal
+   answers — it only surfaces matching curated topics above,
+   so it cannot hallucinate a provision that isn't in TOPICS.
+========================================================= */
+const KEYWORD_MAP = {
+  arrest:"arrest", arrested:"arrest", police:"fir", custody:"arrest",
+  fir:"fir", complaint:"fir", "register fir":"fir", "refuse fir":"fir",
+  bail:"bail", "anticipatory bail":"bail", jail:"bail",
+  "domestic violence":"dv", husband:"dv", beating:"dv", abuse:"dv", dowry:"dv",
+  maintenance:"maintenance", alimony:"maintenance", "wife maintenance":"maintenance", "child support":"maintenance",
+  divorce:"divorce", marriage:"divorce", separation:"divorce", custody2:"divorce",
+  consumer:"consumer", refund:"consumer", defective:"consumer", warranty:"consumer",
+  rti:"rti", information:"rti", "public authority":"rti",
+  rent:"tenancy", tenant:"tenancy", landlord:"tenancy", eviction:"tenancy", deposit:"tenancy",
+  salary:"workplace", wages:"workplace", harassment:"workplace", termination:"workplace", fired:"workplace",
+  fraud:"cyber", scam:"cyber", hacked:"cyber", otp:"cyber", "online fraud":"cyber",
+  parents:"senior", "senior citizen":"senior", elderly:"senior",
+};
+
+function findTopic(query){
+  const q = query.toLowerCase();
+  for(const key of Object.keys(KEYWORD_MAP)){
+    if(q.includes(key)) return TOPICS.find(t=>t.id===KEYWORD_MAP[key]);
+  }
+  // fallback: score by word overlap with topic titles/summaries
+  let best=null, bestScore=0;
+  TOPICS.forEach(t=>{
+    const hay = (t.title+" "+t.summary+" "+t.cat).toLowerCase();
+    let score=0;
+    q.split(/\s+/).forEach(w=>{ if(w.length>3 && hay.includes(w)) score++; });
+    if(score>bestScore){bestScore=score;best=t;}
+  });
+  return bestScore>0 ? best : null;
+}
+
+/* =========================================================
+   Router / render
+========================================================= */
+let state = { route:"home", activeCat:"All", activeTopic:null, activeDoc:"rti", formData:{} };
+
+function nav(route){ state.route = route; state.activeTopic=null; render(); window.scrollTo(0,0); }
+function openTopic(id){ state.route="rights"; state.activeTopic=id; render(); window.scrollTo(0,0); }
+
+function buildNav(){
+  const navList = document.getElementById("navList");
+  const mobileNav = document.getElementById("mobileNav");
+  navList.innerHTML = "";
+  mobileNav.innerHTML = "";
+  SECTIONS.forEach((s,i)=>{
+    const b = document.createElement("button");
+    b.innerHTML = `<span class="num">${String(i+1).padStart(2,"0")}</span>${s.label}`;
+    if(state.route===s.id) b.classList.add("active");
+    b.onclick=()=>nav(s.id);
+    navList.appendChild(b);
+
+    const mb = document.createElement("button");
+    mb.textContent = s.label;
+    if(state.route===s.id) mb.classList.add("active");
+    mb.onclick=()=>nav(s.id);
+    mobileNav.appendChild(mb);
+  });
+}
+
+function verifyNote(){
+  return `<div class="verify-note"><span class="stamp">✓</span><div>General information only, curated for common situations. Section numbers are provided as a starting reference — always confirm the current text on <a href="https://www.indiacode.nic.in" target="_blank" rel="noopener">indiacode.nic.in</a> or with a lawyer before relying on them for a filing.</div></div>`;
+}
+
+function renderHome(){
+  return `
+  <div class="hero">
+    <span class="eyebrow">Adhikar · अधिकार</span>
+    <h1>Know your rights. Act on them.</h1>
+    <p class="lede">A free, self-help guide to major Indian laws that affect everyday life — arrest and FIRs, family and maintenance, consumer complaints, RTI, tenancy, workplace, and cybercrime. Curated in plain language, grounded in the actual sections of the law.</p>
+    <div class="updates"><b>Recent update:</b> The Bharatiya Nyaya Sanhita, Bharatiya Nagarik Suraksha Sanhita, and Bharatiya Sakshya Adhiniyam replaced the IPC, CrPC, and Evidence Act respectively, effective 1 July 2024. Topics below reflect the new section numbers, with the earlier IPC/CrPC numbers noted alongside for reference.</div>
+  </div>
+  ${verifyNote()}
+  <h2>Browse by situation</h2>
+  <div class="grid">
+    ${TOPICS.slice(0,6).map(t=>`
+      <div class="topic-card" onclick="openTopic('${t.id}')">
+        <span class="ref">${t.cat.toUpperCase()}</span>
+        <h3>${t.title}</h3>
+        <p>${t.summary}</p>
+      </div>`).join("")}
+  </div>
+  <div class="card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <div>
+      <h3 style="margin:0 0 4px;">Not sure where to start?</h3>
+      <p style="margin:0;">Describe your situation in plain words and Adhikar will point you to the relevant law.</p>
+    </div>
+    <button class="btn" onclick="nav('ask')">Ask Adhikar →</button>
+  </div>`;
+}
+
+function renderRights(){
+  if(state.activeTopic){
+    const t = TOPICS.find(x=>x.id===state.activeTopic);
+    return `
+    <button class="btn secondary" onclick="state.activeTopic=null;render();">← All topics</button>
+    <span class="eyebrow">${t.cat}</span>
+    <h1>${t.title}</h1>
+    <p class="lede">${t.summary}</p>
+    <div class="card">
+      <div class="section-ref">${t.act}</div>
+      ${t.provisions.map(p=>`
+        <div class="provision">
+          <div style="font-family:var(--mono);font-size:11.5px;color:var(--seal);margin-bottom:2px;">${p.ref}</div>
+          <div class="ptext">${p.text}</div>
+        </div>`).join("")}
+    </div>
+    <h2>What you can do</h2>
+    <ul class="steps">
+      ${t.steps.map((s,i)=>`<li><span class="n">${i+1}</span><span>${s}</span></li>`).join("")}
+    </ul>
+    ${verifyNote()}
+    <div class="disclaimer">
+      <span>⚖</span>
+      <div><b>This is not legal advice.</b> Every case turns on its specific facts. For guidance tailored to your situation, call NALSA on <b>15100</b> (free) or consult a lawyer.</div>
+    </div>`;
+  }
+
+  return `
+  <span class="eyebrow">Reference library</span>
+  <h1>Know Your Rights</h1>
+  <p class="lede">Curated summaries of ${TOPICS.length} major areas of Indian law that most commonly affect individuals seeking legal aid.</p>
+  <div class="cat-strip">
+    <div class="cat-pill ${state.activeCat==='All'?'active':''}" onclick="state.activeCat='All';render();">All</div>
+    ${CATEGORIES.map(c=>`<div class="cat-pill ${state.activeCat===c?'active':''}" onclick="state.activeCat='${c}';render();">${c}</div>`).join("")}
+  </div>
+  <div class="grid">
+    ${TOPICS.filter(t=>state.activeCat==='All'||t.cat===state.activeCat).map(t=>`
+      <div class="topic-card" onclick="openTopic('${t.id}')">
+        <span class="ref">${t.cat.toUpperCase()} · ${t.act.split(",")[0]}</span>
+        <h3>${t.title}</h3>
+        <p>${t.summary}</p>
+      </div>`).join("")}
+  </div>`;
+}
+
+let chatHistory = [];
+function renderAsk(){
+  setTimeout(()=>{
+    const log = document.getElementById("chatLog");
+    if(log) log.scrollTop = log.scrollHeight;
+  },0);
+  return `
+  <span class="eyebrow">Guided search, not guesswork</span>
+  <h1>Ask Adhikar</h1>
+  <p class="lede">Describe your situation in your own words. Adhikar matches it to a curated topic below and cites the exact provision — it will never invent a section number it doesn't have on file.</p>
+  <div class="chat-box">
+    <div class="chat-log" id="chatLog">
+      ${chatHistory.length===0 ? `<div class="msg bot">Hi — tell me what's going on. For example: "police won't file my complaint" or "landlord won't return my deposit".</div>` : ""}
+      ${chatHistory.map(m=>`
+        <div class="msg ${m.role}">
+          ${m.src?`<span class="src">${m.src}</span>`:""}
+          ${m.text}
+        </div>`).join("")}
+    </div>
+    <div class="chat-suggest">
+      ${["My landlord won't return my deposit","Police refused to file my FIR","I need maintenance from my husband","A shop won't refund a defective product"].map(s=>`<div class="chip" onclick="askQuestion('${s.replace(/'/g,"\\'")}')">${s}</div>`).join("")}
+    </div>
+    <div class="chat-input">
+      <input id="askInput" type="text" placeholder="Describe your situation..." onkeydown="if(event.key==='Enter'){submitAsk();}">
+      <button onclick="submitAsk()">Ask</button>
+    </div>
+  </div>
+  ${verifyNote()}`;
+}
+function submitAsk(){
+  const input = document.getElementById("askInput");
+  const q = input.value.trim();
+  if(!q) return;
+  askQuestion(q);
+  input.value="";
+}
+function askQuestion(q){
+  chatHistory.push({role:"user", text:q});
+  const topic = findTopic(q);
+  if(topic){
+    const top3 = topic.provisions.slice(0,2).map(p=>`<div class="provision" style="margin:8px 0;"><div style="font-family:var(--mono);font-size:10.5px;color:var(--seal);">${p.ref}</div>${p.text}</div>`).join("");
+    chatHistory.push({role:"bot", src:`Matched: ${topic.title} — ${topic.act}`,
+      text:`${topic.summary}${top3}<div style="margin-top:8px;"><button class="btn" style="padding:8px 14px;font-size:12.5px;" onclick="openTopic('${topic.id}')">Read full topic →</button></div>`});
+  } else {
+    chatHistory.push({role:"bot", text:`I don't have a curated topic matching that yet — this library currently covers arrest, FIRs, bail, domestic violence, maintenance, divorce, consumer complaints, RTI, tenancy, workplace, cybercrime, and senior citizens' rights. For anything outside this, please call NALSA on <b>15100</b> — it's free and they can guide you directly.`});
+  }
+  render();
+}
+
+function renderDraft(){
+  const doc = DOC_TYPES.find(d=>d.id===state.activeDoc);
+  const fd = state.formData[doc.id] || (state.formData[doc.id]={});
+  return `
+  <span class="eyebrow">Self-help drafting</span>
+  <h1>Draft a Document</h1>
+  <p class="lede">Fill in the details below — a draft is generated instantly. These are general-purpose templates; for anything high-stakes, have a lawyer review before sending.</p>
+  <div class="doc-tabs">
+    ${DOC_TYPES.map(d=>`<div class="doc-tab ${state.activeDoc===d.id?'active':''}" onclick="state.activeDoc='${d.id}';render();">${d.label}</div>`).join("")}
+  </div>
+  <div class="grid">
+    <div>
+      ${doc.fields.map(f=>`
+        <label>${f.label}</label>
+        ${f.ta ? `<textarea placeholder="${f.ph||''}" oninput="updateField('${doc.id}','${f.k}',this.value)">${fd[f.k]||""}</textarea>`
+               : `<input type="text" placeholder="${f.ph||''}" value="${(fd[f.k]||"").replace(/"/g,'&quot;')}" oninput="updateField('${doc.id}','${f.k}',this.value)">`}
+      `).join("")}
+      <button class="btn" onclick="downloadDoc()">⬇ Download as .txt</button>
+    </div>
+    <div>
+      <label style="margin-top:0;">Live preview</label>
+      <div class="preview" id="docPreview">${doc.render(fd)}</div>
+    </div>
+  </div>
+  ${verifyNote()}`;
+}
+function updateField(docId, key, val){
+  if(!state.formData[docId]) state.formData[docId]={};
+  state.formData[docId][key]=val;
+  const doc = DOC_TYPES.find(d=>d.id===docId);
+  document.getElementById("docPreview").textContent = doc.render(state.formData[docId]);
+}
+function downloadDoc(){
+  const doc = DOC_TYPES.find(d=>d.id===state.activeDoc);
+  const text = doc.render(state.formData[doc.id]||{});
+  const blob = new Blob([text], {type:"text/plain"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `${doc.id}-draft.txt`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function renderHelp(){
+  return `
+  <span class="eyebrow">When you need a person, not a page</span>
+  <h1>Get Help</h1>
+  <p class="lede">Free, official helplines. Save these — they cost nothing to call and are staffed by people who can act, not just advise.</p>
+  ${HELP.map(h=>`
+    <div class="help-card">
+      <div><h3>${h.name}</h3><p>${h.note}</p></div>
+      <div class="num">${h.num}</div>
+    </div>`).join("")}
+  <div class="card">
+    <h3 style="margin-top:0;">Apply for free legal aid or a panel lawyer</h3>
+    <p>Under the Legal Services Authorities Act, 1987, free legal representation is available to eligible groups — including women, children, SC/ST members, persons with disabilities, industrial workmen, and those with annual income below the state-notified limit. Apply via <a href="https://nalsa.gov.in" target="_blank" rel="noopener">nalsa.gov.in</a>, in person at your District Legal Services Authority, or by calling 15100.</p>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0;">Track or file a case</h3>
+    <p><a href="https://services.ecourts.gov.in" target="_blank" rel="noopener">eCourts Services</a> — check case status, cause lists, and orders for district and High Courts across India.</p>
+  </div>`;
+}
+
+function render(){
+  buildNav();
+  const c = document.getElementById("content");
+  if(state.route==="home") c.innerHTML = renderHome();
+  else if(state.route==="rights") c.innerHTML = renderRights();
+  else if(state.route==="ask") c.innerHTML = renderAsk();
+  else if(state.route==="draft") c.innerHTML = renderDraft();
+  else if(state.route==="help") c.innerHTML = renderHelp();
+}
+render();
+</script>
+</body>
+</html>
