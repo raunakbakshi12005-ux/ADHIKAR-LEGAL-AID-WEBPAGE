@@ -9,7 +9,7 @@
   --ink:#181712;
   --ink-soft:#4a4740;
   --paper:#EDE9DC;
-  --paper-raised:#F7F4EA;
+  --paper-raised:rgba(247,244,234,.72);
   --navy:#16233F;
   --navy-soft:#2A3A5C;
   --marigold:#D98E2B;
@@ -25,7 +25,8 @@
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
-  background:var(--paper);
+  background:radial-gradient(ellipse at 8% 10%,#e8e2d1 0%,transparent 45%),radial-gradient(ellipse at 90% 82%,#dbe5e2 0%,transparent 40%),linear-gradient(135deg,#eee9dd,#e4e7e2 55%,#eee5d8);
+  background-attachment:fixed;
   color:var(--ink);
   font-family:var(--sans);
   font-size:15px;
@@ -46,6 +47,22 @@ button{font-family:inherit;cursor:pointer;}
 }
 .dotted{border-top:2px dotted var(--line);}
 
+
+
+/* ---------- translucent glass surfaces and blurred ambient color ---------- */
+body::after{
+  content:"";position:fixed;inset:-12%;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 22% 34%,rgba(217,142,43,.16),transparent 28%),
+             radial-gradient(ellipse at 78% 68%,rgba(47,107,79,.15),transparent 30%),
+             radial-gradient(ellipse at 72% 18%,rgba(122,46,46,.09),transparent 25%);
+  filter:blur(42px);opacity:.85;animation:ambient-drift 24s ease-in-out infinite alternate;
+}
+.main{background:rgba(237,233,220,.22);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+.card,.topic-card,.help-card,.chat-box,.preview,.doc-tab,.cat-pill,.act-card{
+  background:rgba(247,244,234,.66);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+@keyframes ambient-drift{from{transform:translate3d(-1.5%,0,0) scale(1)}to{transform:translate3d(1.5%,1%,0) scale(1.04)}}
 
 /* ---------- quiet law-themed background motion ---------- */
 .shell{position:relative;z-index:1;}
