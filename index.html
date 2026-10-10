@@ -375,6 +375,70 @@ textarea{resize:vertical;min-height:70px;}
 @media(max-width:600px){.library-controls{grid-template-columns:1fr}.act-card{align-items:flex-start;flex-direction:column}.act-card a{white-space:normal}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
+
+/* ---------- glass finish for every remaining interactive control ---------- */
+.btn,.chip,.chat-input button,.act-card a{
+  position:relative;isolation:isolate;overflow:hidden;
+  border:1px solid rgba(255,255,255,.62);
+  border-radius:999px;
+  -webkit-backdrop-filter:blur(22px) saturate(185%);
+  backdrop-filter:blur(22px) saturate(185%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72),inset 0 -1px 0 rgba(22,35,63,.05),0 5px 16px rgba(22,35,63,.11);
+  transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.btn,.chat-input button{
+  background:linear-gradient(135deg,rgba(255,218,157,.88),rgba(217,142,43,.73));
+}
+.btn:hover,.chat-input button:hover{
+  background:linear-gradient(135deg,rgba(255,231,190,.96),rgba(217,142,43,.88));
+  color:var(--navy);transform:translateY(-2px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.82),0 8px 20px rgba(185,111,20,.2);
+}
+.btn.secondary{
+  background:rgba(255,255,255,.38);color:var(--navy);
+  border-color:rgba(22,35,63,.20);
+}
+.btn.secondary:hover{background:rgba(255,255,255,.62);color:var(--navy);}
+.chip{
+  background:rgba(255,255,255,.40);color:var(--ink-soft);
+  border-color:rgba(255,255,255,.64);
+}
+.chip:hover{
+  background:rgba(255,255,255,.68);color:var(--navy);transform:translateY(-2px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.88),0 7px 18px rgba(22,35,63,.12);
+}
+.act-card a{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:8px 13px;background:rgba(255,255,255,.42);color:var(--navy);
+  text-decoration:none;border-color:rgba(255,255,255,.66);
+}
+.act-card a:hover{background:rgba(255,255,255,.72);transform:translateY(-1px);}
+.topic-card{
+  border-radius:18px;
+  -webkit-backdrop-filter:blur(14px) saturate(170%);
+  backdrop-filter:blur(14px) saturate(170%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55);
+}
+.topic-card:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.72),0 8px 20px rgba(22,35,63,.10);}
+input[type=text],input[type=search],input[type=date],textarea,select{
+  background:rgba(255,255,255,.43);
+  border-color:rgba(255,255,255,.70);
+  border-radius:14px;
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  backdrop-filter:blur(18px) saturate(160%);
+  box-shadow:inset 0 1px 2px rgba(22,35,63,.04),inset 0 1px 0 rgba(255,255,255,.62);
+}
+input[type=text]:focus,input[type=search]:focus,input[type=date]:focus,textarea:focus,select:focus{
+  outline:none;border-color:rgba(185,111,20,.55);
+  box-shadow:0 0 0 3px rgba(217,142,43,.14),inset 0 1px 0 rgba(255,255,255,.7);
+}
+:where(button,a[href],.topic-card,.chip,.doc-tab,.cat-pill):focus-visible{
+  outline:3px solid rgba(217,142,43,.68);outline-offset:3px;
+}
+@supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){
+  .btn,.chip,.chat-input button,.act-card a{background-color:rgba(247,244,234,.96)}
+}
+
 </style>
 </head>
 <body>
