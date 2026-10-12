@@ -439,13 +439,102 @@ input[type=text]:focus,input[type=search]:focus,input[type=date]:focus,textarea:
   .btn,.chip,.chat-input button,.act-card a{background-color:rgba(247,244,234,.96)}
 }
 
+/* ---------- monochrome finish ---------- */
+:root{
+  --ink:#171717;
+  --ink-soft:#505050;
+  --paper:#f7f7f5;
+  --paper-raised:#fff;
+  --navy:#111;
+  --navy-soft:#303030;
+  --marigold:#202020;
+  --marigold-deep:#000;
+  --seal:#222;
+  --verified:#333;
+  --line:#dededb;
+}
+html{scroll-behavior:smooth;scroll-padding-top:18px;}
+body{
+  background:linear-gradient(145deg,#f7f7f5 0%,#eee 100%);
+  background-attachment:fixed;
+}
+body::before,body::after{display:none;}
+.main{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;}
+.sidebar{background:#111;color:#fff;border-right:1px solid #333;}
+.brand{border-bottom-color:#333;}
+.brand .mark{color:#fff;}
+.brand .mark .seal-dot{background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.14);}
+.brand .tag,.sidebar-foot{color:#bdbdbd;}
+.sidebar-foot{border-top-color:#333;}
+.sidebar-foot b{color:#fff;}
+.nav button{color:#d8d8d8;background:transparent;border:1px solid transparent;border-radius:8px;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;}
+.nav button .num{color:#888;}
+.nav button:hover{background:#262626;transform:translateX(2px);}
+.nav button.active,.nav button.active:hover{background:#fff;color:#111;border-color:#fff;box-shadow:none;}
+.nav button.active .num{color:#333;}
+.topbar{background:#222;color:#fff;padding:10px 28px;font-size:12.5px;}
+.topbar b{color:#fff;}
+.mobile-nav{display:none;}
+.hero{background:#111;color:#fff;border-radius:12px;padding:42px 40px;box-shadow:0 14px 34px rgba(0,0,0,.09);}
+.hero h1{color:#fff;}
+.hero p{color:#e0e0e0;}
+.hero .eyebrow,.hero .updates b{color:#fff;}
+.hero .updates{border-top-color:#484848;}
+.hero .seal-dot{animation:none;}
+.eyebrow,.topic-card .ref,.act-card .ref,.msg.bot .src{color:#383838;}
+a{color:#111;text-decoration-thickness:1px;text-underline-offset:3px;}
+a:hover{color:#555;}
+.card,.topic-card,.help-card,.chat-box,.preview,.act-card{
+  background:#fff;border:1px solid var(--line);backdrop-filter:none;-webkit-backdrop-filter:none;
+  box-shadow:0 2px 8px rgba(0,0,0,.025);
+}
+.topic-card{border-radius:10px;padding:19px 20px;}
+.topic-card:hover,.help-card:hover{border-color:#777;box-shadow:0 8px 22px rgba(0,0,0,.07);}
+.section-ref,.steps li .n{background:#222;color:#fff;}
+.provision{border-left-color:#222;}
+.verify-note{background:#f1f1ef;border-color:#d5d5d2;color:#414141;}
+.verify-note .stamp{color:#222;}
+.disclaimer{background:#222;color:#fff;border-radius:8px;}
+.msg.user,.library-callout{background:#191919;color:#fff;}
+.library-callout p{color:#e0e0e0;}
+.library-callout a{color:#fff;}
+.btn,.chat-input button{
+  color:#fff;background:#171717;border:1px solid #171717;border-radius:8px;
+  box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.btn:hover,.chat-input button:hover{background:#3a3a3a;color:#fff;transform:translateY(-1px);box-shadow:0 5px 14px rgba(0,0,0,.14);}
+.btn.secondary{background:#fff;color:#171717;border:1px solid #888;}
+.btn.secondary:hover{background:#eee;color:#111;}
+.chip,.act-card a{background:#f5f5f4;color:#222;border:1px solid #d5d5d2;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;}
+.chip:hover,.act-card a:hover{background:#e9e9e7;color:#111;box-shadow:none;}
+.doc-tabs{background:#eee;border-color:#ddd;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;}
+.doc-tab,.cat-pill{background:#f5f5f4;color:#333;border:1px solid #d7d7d4;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;}
+.doc-tab.active,.cat-pill.active{background:#191919;color:#fff;border-color:#191919;box-shadow:none;}
+input[type=text],input[type=search],input[type=date],textarea,select{
+  background:#fff;border:1px solid #ccc;border-radius:8px;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;
+}
+input[type=text]:focus,input[type=search]:focus,input[type=date]:focus,textarea:focus,select:focus{border-color:#333;box-shadow:0 0 0 3px rgba(0,0,0,.12);}
+:where(button,a[href],.topic-card,.chip,.doc-tab,.cat-pill):focus-visible{outline:3px solid #555;outline-offset:3px;}
+.mobile-topbar{background:#111;color:#fff;border-bottom:1px solid #333;}
+.mobile-topbar>span{color:#ccc!important;}
+@media(max-width:880px){
+  .mobile-nav{display:flex;top:52px;gap:6px;background:#202020;border-bottom:1px solid #383838;padding:7px 10px;}
+  .mobile-nav button{background:#2a2a2a;border:1px solid #424242;color:#e7e7e7;border-radius:999px;padding:8px 12px;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;}
+  .mobile-nav button.active{background:#fff;border-color:#fff;color:#111;}
+  .content{padding-top:26px;}
+  .topbar{padding:9px 16px;}
+  .hero{padding:30px 24px;}
+}
+@media(max-width:600px){.hero{padding:26px 20px}.hero h1{font-size:28px}.topic-card{padding:17px}.help-card{align-items:flex-start}.help-card .num{font-size:17px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+
 </style>
 </head>
 <body>
 
 <div class="shell">
   <!-- desktop sidebar -->
-  <nav class="sidebar">
+  <nav class="sidebar" aria-label="Main navigation">
     <div class="brand">
       <div class="mark"><span class="seal-dot"></span>Adhikar</div>
       <div class="tag">Legal aid &amp; rights, India</div>
@@ -461,7 +550,7 @@ input[type=text]:focus,input[type=search]:focus,input[type=date]:focus,textarea:
       <div class="mark"><span class="seal-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--marigold);"></span>Adhikar</div>
       <span style="font-size:11px;color:#B9C0D1;">15100 · Free Legal Aid</span>
     </div>
-    <div class="mobile-nav" id="mobileNav"></div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation"></nav>
 
     <div class="topbar">
       <span>⚠</span>
@@ -1036,14 +1125,16 @@ function buildNav(){
   mobileNav.innerHTML = "";
   SECTIONS.forEach((s,i)=>{
     const b = document.createElement("button");
+    b.type = "button";
     b.innerHTML = `<span class="num">${String(i+1).padStart(2,"0")}</span>${s.label}`;
-    if(state.route===s.id) b.classList.add("active");
+    if(state.route===s.id){ b.classList.add("active"); b.setAttribute("aria-current","page"); }
     b.onclick=()=>nav(s.id);
     navList.appendChild(b);
 
     const mb = document.createElement("button");
+    mb.type = "button";
     mb.textContent = s.label;
-    if(state.route===s.id) mb.classList.add("active");
+    if(state.route===s.id){ mb.classList.add("active"); mb.setAttribute("aria-current","page"); }
     mb.onclick=()=>nav(s.id);
     mobileNav.appendChild(mb);
   });
@@ -1065,7 +1156,7 @@ function renderHome(){
   <h2>Browse by situation</h2>
   <div class="grid">
     ${TOPICS.slice(0,6).map(t=>`
-      <div class="topic-card" onclick="openTopic('${t.id}')">
+      <div class="topic-card" role="button" tabindex="0" onclick="openTopic('${t.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTopic('${t.id}');}">
         <span class="ref">${t.cat.toUpperCase()}</span>
         <h3>${t.title}</h3>
         <p>${t.summary}</p>
@@ -1117,7 +1208,7 @@ function renderRights(){
   </div>
   <div class="grid">
     ${TOPICS.filter(t=>state.activeCat==='All'||t.cat===state.activeCat).map(t=>`
-      <div class="topic-card" onclick="openTopic('${t.id}')">
+      <div class="topic-card" role="button" tabindex="0" onclick="openTopic('${t.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTopic('${t.id}');}">
         <span class="ref">${t.cat.toUpperCase()} · ${t.act.split(",")[0]}</span>
         <h3>${t.title}</h3>
         <p>${t.summary}</p>
